@@ -1,5 +1,6 @@
 package chapter1;
 
+import chapter1.printer.Printer;
 import chapter1.printer.StringPrinter;
 import org.junit.Before;
 import org.junit.Test;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.context.support.StaticApplicationContext;
@@ -75,5 +77,23 @@ public class HelloTest {
         Hello hello = ac.getBean("hello", Hello.class);
         hello.print();
         assertThat(ac.getBean("printer").toString(), is("Hello Spring"));
+    }
+
+    @Test
+    public void applicationContextTree() {
+        ApplicationContext parent = new GenericXmlApplicationContext("classpath:/chapter1/parentContext.xml");
+        GenericApplicationContext child = new GenericApplicationContext(parent);
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(child);
+        reader.loadBeanDefinitions("classpath:/chapter1/childContext.xml");
+        child.refresh();
+
+        Printer printer = child.getBean("printer", Printer.class);
+        assertThat(printer, is(notNullValue()));
+
+        Hello hello = child.getBean("hello", Hello.class);
+        assertThat(hello.sayHello(), is("Hello Child"));
+
+        hello = parent.getBean("hello", Hello.class);
+        assertThat(hello.sayHello(), is("Hello Parent"));
     }
 }
