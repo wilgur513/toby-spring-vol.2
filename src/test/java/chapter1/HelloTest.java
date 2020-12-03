@@ -1,5 +1,7 @@
 package chapter1;
 
+import chapter1.hello.AnnotatedHello;
+import chapter1.hello.Hello;
 import chapter1.printer.Printer;
 import chapter1.printer.StringPrinter;
 import org.junit.Test;
@@ -101,7 +103,7 @@ public class HelloTest {
 
     @Test
     public void annotationConfigApplicationContext() {
-        ApplicationContext ac = new AnnotationConfigApplicationContext("chapter1");
+        ApplicationContext ac = new AnnotationConfigApplicationContext("chapter1.hello");
 
         try {
             AnnotatedHello hello = ac.getBean("annotatedHello", AnnotatedHello.class);
@@ -115,4 +117,14 @@ public class HelloTest {
     }
 
 
+    @Test
+    public void annotationConfiguration() {
+         ApplicationContext ac = new AnnotationConfigApplicationContext(AnnotatedHelloConfig.class);
+         AnnotatedHello hello = ac.getBean("annotatedHello", AnnotatedHello.class);
+         AnnotatedHelloConfig config = ac.getBean("annotatedHelloConfig", AnnotatedHelloConfig.class);
+
+         assertThat(hello, is(notNullValue()));
+         assertThat(config, is(notNullValue()));
+         assertThat(config.annotatedHello(), is(sameInstance(hello)));
+    }
 }
