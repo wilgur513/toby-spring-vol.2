@@ -2,19 +2,21 @@ package chapter1;
 
 import chapter1.printer.Printer;
 import chapter1.printer.StringPrinter;
-import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.context.support.StaticApplicationContext;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.fail;
 
 public class HelloTest {
     @Test
@@ -96,4 +98,21 @@ public class HelloTest {
         hello = parent.getBean("hello", Hello.class);
         assertThat(hello.sayHello(), is("Hello Parent"));
     }
+
+    @Test
+    public void annotationConfigApplicationContext() {
+        ApplicationContext ac = new AnnotationConfigApplicationContext("chapter1");
+
+        try {
+            AnnotatedHello hello = ac.getBean("annotatedHello", AnnotatedHello.class);
+            fail();
+        }catch (NoSuchBeanDefinitionException e){
+
+        }
+
+        AnnotatedHello hello = ac.getBean("hello", AnnotatedHello.class);
+        assertThat(hello, is(notNullValue()));
+    }
+
+
 }
