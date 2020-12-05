@@ -136,27 +136,4 @@ public class HelloTest {
         assertThat(printer1, is(notNullValue()));
         assertThat(printer1, is(sameInstance(printer2)));
     }
-
-    @Test
-    public void constructorArg(){
-        ApplicationContext ac = new GenericXmlApplicationContext("/chapter1/context.xml");
-
-        Hello hello = ac.getBean("hello2", Hello.class);
-        assertThat(hello.sayHello(), is("Hello Spring"));
-
-        hello = ac.getBean("hello3", Hello.class);
-        assertThat(hello.sayHello(), is("Hello Spring"));
-
-        hello = ac.getBean("hello4", Hello.class);
-        assertThat(hello.sayHello(), is("Hello Spring"));
-    }
-
-    @Test
-    public void autowireByName() {
-        ApplicationContext ac = new GenericXmlApplicationContext("/chapter1/context.xml");
-
-        Hello hello = ac.getBean("hello5", Hello.class);
-        hello.print();
-        assertThat(ac.getBean("printer").toString(), is("Hello AutowiredByName"));
-    }
 }

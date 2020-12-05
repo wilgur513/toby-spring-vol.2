@@ -2,6 +2,8 @@ package chapter1.hello;
 
 import chapter1.printer.Printer;
 
+import javax.annotation.Resource;
+
 public class Hello {
     String name;
     Printer printer;
@@ -26,6 +28,7 @@ public class Hello {
         this.name = name;
     }
 
+    @Resource(name="printer")
     public void setPrinter(Printer printer) {
         this.printer = printer;
     }
