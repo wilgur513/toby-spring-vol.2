@@ -1,5 +1,8 @@
 package chapter1.printer;
 
+import org.springframework.stereotype.Component;
+
+@Component("printer")
 public class StringPrinter implements Printer{
     private StringBuffer buffer = new StringBuffer();
 

@@ -1,12 +1,14 @@
 package chapter1.hello;
 
 import chapter1.printer.Printer;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
 public class Hello {
-    String name;
-    Printer printer;
+    private String name;
+    @Resource
+    private Printer printer;
 
     public Hello() {
     }
@@ -28,7 +30,6 @@ public class Hello {
         this.name = name;
     }
 
-    @Resource(name="printer")
     public void setPrinter(Printer printer) {
         this.printer = printer;
     }

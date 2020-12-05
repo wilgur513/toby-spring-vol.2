@@ -8,9 +8,9 @@
                            http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
     <context:annotation-config />
+    <context:component-scan base-package="chapter1.printer"/>
 
     <bean id="hello" class="chapter1.hello.Hello">
         <property name="name" value="Spring"/>
     </bean>
-    <bean id="printer" class="chapter1.printer.StringPrinter" />
 </beans>
