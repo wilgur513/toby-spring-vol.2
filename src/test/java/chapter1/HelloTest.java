@@ -116,7 +116,6 @@ public class HelloTest {
         assertThat(hello, is(notNullValue()));
     }
 
-
     @Test
     public void annotationConfiguration() {
          ApplicationContext ac = new AnnotationConfigApplicationContext(AnnotatedHelloConfig.class);
@@ -126,5 +125,15 @@ public class HelloTest {
          assertThat(hello, is(notNullValue()));
          assertThat(config, is(notNullValue()));
          assertThat(config.annotatedHello(), is(sameInstance(hello)));
+    }
+
+    @Test
+    public void notConfigureClassBean() {
+        ApplicationContext ac = new AnnotationConfigApplicationContext(NotConfigureBeans.class);
+        Printer printer1 = ac.getBean("printer", Printer.class);
+        Printer printer2 = ac.getBean("printer", Printer.class);
+
+        assertThat(printer1, is(notNullValue()));
+        assertThat(printer1, is(sameInstance(printer2)));
     }
 }
