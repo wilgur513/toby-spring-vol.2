@@ -3,6 +3,7 @@ package chapter1;
 import chapter1.hello.AnnotatedHello;
 import chapter1.hello.Hello;
 import chapter1.printer.Printer;
+import chapter1.printer.Printers;
 import chapter1.printer.StringPrinter;
 import org.junit.Test;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -71,7 +72,7 @@ public class HelloTest {
 
         Hello hello = ac.getBean("hello", Hello.class);
         hello.print();
-        assertThat(ac.getBean("printer").toString(), is("Hello Spring"));
+        assertThat(hello.printer.toString(), is("Hello Spring"));
     }
 
     @Test
@@ -80,7 +81,7 @@ public class HelloTest {
 
         Hello hello = ac.getBean("hello", Hello.class);
         hello.print();
-        assertThat(ac.getBean("printer").toString(), is("Hello Spring"));
+        assertThat(hello.printer.toString(), is("Hello Spring"));
     }
 
     @Test
@@ -135,5 +136,13 @@ public class HelloTest {
 
         assertThat(printer1, is(notNullValue()));
         assertThat(printer1, is(sameInstance(printer2)));
+    }
+
+    @Test
+    public void autowireCollection(){
+        GenericXmlApplicationContext ac = new GenericXmlApplicationContext("classpath:/chapter1/context.xml");
+        Printers printers = ac.getBean("printers", Printers.class);
+
+        assertThat(printers.size(), is(2));
     }
 }

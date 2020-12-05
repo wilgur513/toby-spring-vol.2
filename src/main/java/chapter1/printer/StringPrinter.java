@@ -1,8 +1,10 @@
 package chapter1.printer;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-@Component("printer")
+@Component
+@Qualifier("stringPrinter")
 public class StringPrinter implements Printer{
     private StringBuffer buffer = new StringBuffer();
 
