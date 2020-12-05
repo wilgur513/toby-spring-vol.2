@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+       default-autowire="byName">
     <bean id="hello" class="chapter1.hello.Hello">
         <property name="name" value="Spring"/>
         <property name="printer" ref="printer" />
@@ -20,6 +21,10 @@
     <bean id="hello4" class="chapter1.hello.Hello">
         <constructor-arg name="name" value="Spring" />
         <constructor-arg name="printer" ref="printer"/>
+    </bean>
+
+    <bean id="hello5" class="chapter1.hello.Hello" autowire="byType">
+        <property name="name" value="AutowiredByName" />
     </bean>
     <bean id="printer" class="chapter1.printer.StringPrinter" />
 </beans>

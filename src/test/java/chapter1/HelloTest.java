@@ -150,4 +150,13 @@ public class HelloTest {
         hello = ac.getBean("hello4", Hello.class);
         assertThat(hello.sayHello(), is("Hello Spring"));
     }
+
+    @Test
+    public void autowireByName() {
+        ApplicationContext ac = new GenericXmlApplicationContext("/chapter1/context.xml");
+
+        Hello hello = ac.getBean("hello5", Hello.class);
+        hello.print();
+        assertThat(ac.getBean("printer").toString(), is("Hello AutowiredByName"));
+    }
 }
