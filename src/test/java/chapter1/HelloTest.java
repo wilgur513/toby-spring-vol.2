@@ -6,6 +6,7 @@ import chapter1.printer.Printer;
 import chapter1.printer.StringPrinter;
 import org.junit.Test;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.RootBeanDefinition;
@@ -146,5 +147,36 @@ public class HelloTest {
         assertThat(hello.sayHello(), is("Hello AnnotatedHello"));
         hello.print();
         assertThat(ac.getBean(Printer.class).toString(), is("Hello AnnotatedHello"));
+    }
+
+    static class ValueTestClass{
+        @Value("1, 2, 3, 4")
+        int[] list;
+        @Value("1.2")
+        double d;
+    }
+
+    @Test
+    public void valueAnnotationTest() {
+      ApplicationContext ac = new AnnotationConfigApplicationContext(ValueTestClass.class);
+      ValueTestClass cls = ac.getBean(ValueTestClass.class);
+
+      assertThat(cls.list, is(new int[]{1, 2, 3, 4}));
+      assertThat(cls.d, is(1.2));
+    }
+
+    @Test
+    public void collectionContext() {
+        ApplicationContext ac = new GenericXmlApplicationContext("/chapter1/collectionContext.xml");
+        CollectionData data = ac.getBean(CollectionData.class);
+
+        assertThat(data.names.size(), is(3));
+        assertThat(data.names.get(0), is("Spring"));
+        assertThat(data.names.get(1), is("IoC"));
+        assertThat(data.names.get(2), is("DI"));
+
+        assertThat(data.map.size(), is(2));
+        assertThat(data.map.get("Kim"), is(30));
+        assertThat(data.map.get("Lee"), is(35));
     }
 }
