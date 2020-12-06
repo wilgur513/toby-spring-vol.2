@@ -17,7 +17,6 @@ public class AnnotatedHelloConfig {
     @Bean
     public Hello hello(Printer printer){
         Hello hello = new Hello();
-        hello.setName("AnnotatedHello");
         hello.setPrinter(printer);
 
         return hello;

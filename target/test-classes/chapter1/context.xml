@@ -11,6 +11,5 @@
     <context:component-scan base-package="chapter1.printer"/>
 
     <bean id="hello" class="chapter1.hello.Hello">
-        <property name="name" value="Spring"/>
     </bean>
 </beans>

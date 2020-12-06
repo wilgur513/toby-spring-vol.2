@@ -141,6 +141,7 @@ public class HelloTest {
     public void beanMethodDI(){
         ApplicationContext ac = new AnnotationConfigApplicationContext(AnnotatedHelloConfig.class);
         Hello hello = ac.getBean("hello", Hello.class);
+        hello.setName("AnnotatedHello");
 
         assertThat(hello.sayHello(), is("Hello AnnotatedHello"));
         hello.print();
