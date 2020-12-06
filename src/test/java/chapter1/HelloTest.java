@@ -170,6 +170,8 @@ public class HelloTest {
         ApplicationContext ac = new GenericXmlApplicationContext("/chapter1/collectionContext.xml");
         CollectionData data = ac.getBean(CollectionData.class);
 
+        assertThat(data.value, is("Spring"));
+
         assertThat(data.names.size(), is(3));
         assertThat(data.names.get(0), is("Spring"));
         assertThat(data.names.get(1), is("IoC"));

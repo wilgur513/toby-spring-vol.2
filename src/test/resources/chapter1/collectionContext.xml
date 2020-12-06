@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/util
+                           http://www.springframework.org/schema/util/spring-util-3.0.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context-3.0.xsd ">
+    <context:property-placeholder location="/chapter1/data.properties" />
+    <util:properties id="prop" location="/chapter1/data.properties" />
+    <context:annotation-config />
 
     <bean id="collectionData" class="chapter1.CollectionData" >
-        <property name="names">
-            <list>
-                <value>Spring</value>
-                <value>IoC</value>
-                <value>DI</value>
-            </list>
-        </property>
+        <property name="names" ref="names" />
         <property name="map">
             <map>
                 <entry key="Kim" value="30"/>
@@ -18,4 +22,11 @@
             </map>
         </property>
     </bean>
+
+    <util:list id="names" list-class="java.util.LinkedList">
+        <value>#{prop['data.first']}</value>
+        <value>#{prop['data.second']}</value>
+        <value>#{prop['data.third']}</value>
+    </util:list>
+
 </beans>
