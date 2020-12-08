@@ -28,5 +28,4 @@
         <value>#{prop['data.second']}</value>
         <value>#{prop['data.third']}</value>
     </util:list>
-
 </beans>

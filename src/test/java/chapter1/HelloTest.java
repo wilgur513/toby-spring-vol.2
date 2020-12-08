@@ -5,7 +5,9 @@ import chapter1.hello.Hello;
 import chapter1.printer.Printer;
 import chapter1.printer.StringPrinter;
 import org.junit.Test;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
@@ -16,6 +18,9 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.context.support.StaticApplicationContext;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.*;
@@ -180,5 +185,25 @@ public class HelloTest {
         assertThat(data.map.size(), is(2));
         assertThat(data.map.get("Kim"), is(30));
         assertThat(data.map.get("Lee"), is(35));
+    }
+
+    @Test
+    public void singletonScope() {
+        ApplicationContext ac = new AnnotationConfigApplicationContext(SingletonBean.class, SingletonClientBean.class);
+        Set<SingletonBean> beans = new HashSet<>();
+
+        beans.add(ac.getBean(SingletonBean.class));
+        beans.add(ac.getBean(SingletonBean.class));
+        assertThat(beans.size(), is(1));
+
+        beans.add(ac.getBean(SingletonClientBean.class).bean1);
+        beans.add(ac.getBean(SingletonClientBean.class).bean2);
+        assertThat(beans.size(), is(1));
+    }
+
+    static class SingletonBean{}
+    static class SingletonClientBean{
+        @Autowired SingletonBean bean1;
+        @Autowired SingletonBean bean2;
     }
 }
