@@ -186,24 +186,4 @@ public class HelloTest {
         assertThat(data.map.get("Kim"), is(30));
         assertThat(data.map.get("Lee"), is(35));
     }
-
-    @Test
-    public void singletonScope() {
-        ApplicationContext ac = new AnnotationConfigApplicationContext(SingletonBean.class, SingletonClientBean.class);
-        Set<SingletonBean> beans = new HashSet<>();
-
-        beans.add(ac.getBean(SingletonBean.class));
-        beans.add(ac.getBean(SingletonBean.class));
-        assertThat(beans.size(), is(1));
-
-        beans.add(ac.getBean(SingletonClientBean.class).bean1);
-        beans.add(ac.getBean(SingletonClientBean.class).bean2);
-        assertThat(beans.size(), is(1));
-    }
-
-    static class SingletonBean{}
-    static class SingletonClientBean{
-        @Autowired SingletonBean bean1;
-        @Autowired SingletonBean bean2;
-    }
 }
