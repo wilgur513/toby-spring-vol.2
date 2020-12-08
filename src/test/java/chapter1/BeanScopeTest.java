@@ -5,11 +5,13 @@ import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean;
+import org.springframework.beans.factory.config.ServiceLocatorFactoryBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.support.GenericXmlApplicationContext;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -81,6 +83,24 @@ public class BeanScopeTest {
         assertThat(object, is(factory.getObject()));
     }
 
+    @Test
+    public void serviceLocatorFactoryBean() {
+        ApplicationContext ac = new AnnotationConfigApplicationContext(ServiceLocatorConfig.class);
+        MyObjectFactory factoryBean = ac.getBean(MyObjectFactory.class);
+        MyObject object = factoryBean.createObject();
+
+        assertThat(object, is(notNullValue()));
+        assertThat(object, is(ac.getBean(MyObject.class)));
+
+        ac = new GenericXmlApplicationContext("/chapter1/beanScope.xml");
+        object = ac.getBean(MyObject.class);
+        assertThat(object, is(not(ac.getBean(MyObject.class))));
+
+        factoryBean = ac.getBean(MyObjectFactory.class);
+        assertThat(object, is(not(factoryBean.createObject())));
+        assertThat(factoryBean.createObject(), is(not(factoryBean.createObject())));
+    }
+
     @Configuration
     static class ObjectFactoryConfig{
         @Bean
@@ -110,4 +130,22 @@ public class BeanScopeTest {
     }
 
     static class MyObject{}
+
+    @Configuration
+    static class ServiceLocatorConfig{
+        @Bean
+        public ServiceLocatorFactoryBean serviceLocatorFactoryBean(){
+            ServiceLocatorFactoryBean factoryBean = new ServiceLocatorFactoryBean();
+            factoryBean.setServiceLocatorInterface(MyObjectFactory.class);
+            return factoryBean;
+        }
+
+        @Bean
+        public MyObject yourObject(){
+            return new MyObject();
+        }
+    }
+    interface MyObjectFactory{
+        MyObject createObject();
+    }
 }
