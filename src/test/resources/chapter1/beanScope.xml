@@ -6,5 +6,8 @@
         <property name="serviceLocatorInterface" value="chapter1.BeanScopeTest$MyObjectFactory" />
     </bean>
 
-    <bean class="chapter1.BeanScopeTest.MyObject" scope="prototype" />
+    <bean id="myObject" class="chapter1.BeanScopeTest.MyObject" scope="prototype" />
+    <bean class="chapter1.BeanScopeTest.ClassForLookUpTag" >
+        <lookup-method name="myObject" bean="myObject" />
+    </bean>
 </beans>

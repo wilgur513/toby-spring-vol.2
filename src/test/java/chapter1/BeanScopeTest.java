@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean;
 import org.springframework.beans.factory.config.ServiceLocatorFactoryBean;
 import org.springframework.context.ApplicationContext;
@@ -101,8 +102,15 @@ public class BeanScopeTest {
         assertThat(factoryBean.createObject(), is(not(factoryBean.createObject())));
     }
 
+    @Test
+    public void lookupMethodTag() {
+        ApplicationContext ac = new GenericXmlApplicationContext("/chapter1/beanScope.xml");
+        assertThat(ac.getBean(ClassForLookUpTag.class).isMyObjectClass(), is(true));
+    }
+
     @Configuration
     static class ObjectFactoryConfig{
+
         @Bean
         public ObjectFactoryCreatingFactoryBean objectFactory(){
             ObjectFactoryCreatingFactoryBean factory = new ObjectFactoryCreatingFactoryBean();
@@ -122,30 +130,40 @@ public class BeanScopeTest {
         public MyObject myObject(){
             return new MyObject();
         }
-
         @Bean
         public MyObject singleton(){
             return new MyObject();
         }
+
     }
 
     static class MyObject{}
 
     @Configuration
     static class ServiceLocatorConfig{
+
         @Bean
         public ServiceLocatorFactoryBean serviceLocatorFactoryBean(){
             ServiceLocatorFactoryBean factoryBean = new ServiceLocatorFactoryBean();
             factoryBean.setServiceLocatorInterface(MyObjectFactory.class);
             return factoryBean;
         }
-
         @Bean
         public MyObject yourObject(){
             return new MyObject();
         }
+
     }
+
     interface MyObjectFactory{
         MyObject createObject();
+    }
+
+    static abstract class ClassForLookUpTag{
+        public abstract MyObject myObject();
+
+        public boolean isMyObjectClass(){
+            return myObject().getClass().equals(MyObject.class);
+        }
     }
 }
