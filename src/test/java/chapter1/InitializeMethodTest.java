@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
 import javax.annotation.PostConstruct;
@@ -15,25 +16,31 @@ public class InitializeMethodTest {
     @Test
     public void useInitializeBeanInterface(){
         ApplicationContext ac = new AnnotationConfigApplicationContext(MyClass1.class);
-        MyClass1 cls = ac.getBean(MyClass1.class);
-        assertThat(cls.log, is("constructor initialize"));
+        checkIsWellInitialize(ac);
     }
 
     @Test
     public void useInitMethod() {
         ApplicationContext ac = new GenericXmlApplicationContext("/chapter1/initializeMethod.xml");
-        MyClass2 cls = ac.getBean(MyClass2.class);
-        assertThat(cls.log, is("constructor initialize"));
+        checkIsWellInitialize(ac);
     }
 
     @Test
     public void usePostConstructor() {
         ApplicationContext ac = new AnnotationConfigApplicationContext(MyClass3.class);
-        MyClass3 cls = ac.getBean(MyClass3.class);
-        assertThat(cls.log, is("constructor initialize"));
+        checkIsWellInitialize(ac);
     }
 
-    
+    @Test
+    public void useBeanAnnotationSetInitMethod() {
+        ApplicationContext ac = new AnnotationConfigApplicationContext(MyConfig.class);
+        checkIsWellInitialize(ac);
+    }
+
+    private void checkIsWellInitialize(ApplicationContext ac){
+        MyClass cls = ac.getBean(MyClass.class);
+        assertThat(cls.log, is("constructor initialize"));
+    }
 
     static class MyClass{
         String log;
@@ -62,4 +69,20 @@ public class InitializeMethodTest {
             log += " initialize";
         }
     }
+
+    static class MyConfig{
+        @Bean(initMethod = "initialize")
+        public MyClass4 myClass(){
+            return new MyClass4();
+        }
+
+    }
+
+    static class MyClass4 extends MyClass{
+        public void initialize(){
+            log += " initialize";
+        }
+    }
+
+
 }
