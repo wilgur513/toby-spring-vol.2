@@ -2,7 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-    <bean class="chapter1.InitializeMethodTest$MyClass2" init-method="initialize">
+    <bean class="chapter1.InitializeMethodTest$MyClass2" init-method="initialize" destroy-method="destroy">
 
     </bean>
 </beans>
