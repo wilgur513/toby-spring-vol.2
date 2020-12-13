@@ -8,10 +8,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.*;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
 import javax.annotation.PostConstruct;
@@ -58,10 +55,18 @@ public class BeanTest {
     }
 
     @Test(expected = NoSuchBeanDefinitionException.class)
-    public void useFilterWhenScan() {
-        ApplicationContext ac = new AnnotationConfigApplicationContext(ConfigWithFilter.class);
+    public void useAnnotationFilterWhenScan() {
+        ApplicationContext ac = new AnnotationConfigApplicationContext(ConfigWithAnnotationFilter.class);
         ac.getBean(AppConfig.class);
     }
+
+
+    @Test(expected = NoSuchBeanDefinitionException.class)
+    public void userClassFilterWhenScan() {
+        ApplicationContext ac = new AnnotationConfigApplicationContext(ConfigWithClassFilter.class);
+        ac.getBean(AppConfig.class);
+    }
+
 
     @Configuration
     @ComponentScan("chapter1.classforscan")
@@ -77,7 +82,13 @@ public class BeanTest {
 
     @Configuration
     @ComponentScan(value = "chapter1.classforscan", excludeFilters = @ComponentScan.Filter(Configuration.class))
-    static class ConfigWithFilter{
+    static class ConfigWithAnnotationFilter {
+
+    }
+
+    @Configuration
+    @ComponentScan(value = "chapter1.classforscan", excludeFilters = @ComponentScan.Filter(type= FilterType.ASSIGNABLE_TYPE, value=AppConfig.class))
+    static class ConfigWithClassFilter{
 
     }
 
