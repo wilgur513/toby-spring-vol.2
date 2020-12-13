@@ -1,6 +1,7 @@
 package chapter1;
 
 import chapter1.classforscan.MyClass;
+import chapter1.classforscan.AppConfig;
 import chapter1.classforscan.marker.ClassWithMarker;
 import chapter1.classforscan.marker.Marker;
 import org.junit.Test;
@@ -56,6 +57,12 @@ public class BeanTest {
         assertThat(cls, is(notNullValue()));
     }
 
+    @Test(expected = NoSuchBeanDefinitionException.class)
+    public void useFilterWhenScan() {
+        ApplicationContext ac = new AnnotationConfigApplicationContext(ConfigWithFilter.class);
+        ac.getBean(AppConfig.class);
+    }
+
     @Configuration
     @ComponentScan("chapter1.classforscan")
     static class ComponentScanConfig{
@@ -65,6 +72,12 @@ public class BeanTest {
     @Configuration
     @ComponentScan(basePackageClasses = {chapter1.classforscan.marker.Marker.class})
     static class ComponentScanConfigSetMarker{
+
+    }
+
+    @Configuration
+    @ComponentScan(value = "chapter1.classforscan", excludeFilters = @ComponentScan.Filter(Configuration.class))
+    static class ConfigWithFilter{
 
     }
 
