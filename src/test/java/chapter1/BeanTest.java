@@ -4,6 +4,8 @@ import chapter1.classforscan.MyClass;
 import chapter1.classforscan.AppConfig;
 import chapter1.classforscan.marker.ClassWithMarker;
 import chapter1.classforscan.marker.Marker;
+import chapter1.hello.Hello;
+import chapter1.printer.StringPrinter;
 import org.junit.Test;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +81,15 @@ public class BeanTest {
         assertThat(hello, is(notNullValue()));
     }
 
+    @Test
+    public void importResource() {
+        ApplicationContext ac = new AnnotationConfigApplicationContext(ImportResourceConfig.class);
+        chapter1.hello.Hello hello = ac.getBean(chapter1.hello.Hello.class);
+        StringPrinter printer = ac.getBean(StringPrinter.class);
+
+        assertThat(hello, is(notNullValue()));
+        assertThat(printer, is(notNullValue()));
+    }
 
     @Configuration
     @ComponentScan("chapter1.classforscan")
@@ -107,7 +118,7 @@ public class BeanTest {
     @Configuration
     @Import(SimpleConfig.class)
     static class SuperConfig{
-        
+
     }
 
     @Configuration
@@ -119,6 +130,12 @@ public class BeanTest {
         public Hello hello(){
             return new Hello();
         }
+    }
+
+    @Configuration
+    @ImportResource("/chapter1/parentContext.xml")
+    static class ImportResourceConfig{
+
     }
 
     static class Hello{
