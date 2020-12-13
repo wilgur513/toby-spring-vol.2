@@ -66,6 +66,18 @@ public class BeanTest {
         ApplicationContext ac = new AnnotationConfigApplicationContext(ConfigWithClassFilter.class);
         ac.getBean(AppConfig.class);
     }
+    
+    @Test
+    public void importConfigClass() {
+        ApplicationContext ac = new AnnotationConfigApplicationContext(SuperConfig.class);
+        SuperConfig superConfig = ac.getBean(SuperConfig.class);
+        SimpleConfig simpleConfig = ac.getBean(SimpleConfig.class);
+        Hello hello = ac.getBean(Hello.class);
+
+        assertThat(superConfig, is(notNullValue()));
+        assertThat(simpleConfig, is(notNullValue()));
+        assertThat(hello, is(notNullValue()));
+    }
 
 
     @Configuration
@@ -90,6 +102,12 @@ public class BeanTest {
     @ComponentScan(value = "chapter1.classforscan", excludeFilters = @ComponentScan.Filter(type= FilterType.ASSIGNABLE_TYPE, value=AppConfig.class))
     static class ConfigWithClassFilter{
 
+    }
+
+    @Configuration
+    @Import(SimpleConfig.class)
+    static class SuperConfig{
+        
     }
 
     @Configuration
