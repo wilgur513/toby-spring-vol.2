@@ -8,6 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -60,6 +61,15 @@ public class iBatisTest {
         assertThat(member.id, is(1));
         assertThat(member.name, is("spring"));
         assertThat(member.point, is(1.5));
+    }
+
+    @Test
+    public void findMembersForMap() {
+        dao.insert(new Member(1, "spring", 1.5));
+        dao.insert(new Member(2, "framework", 2.5));
+        Map<Integer, Member> map = dao.findMembersForMap();
+        assertThat(map.get(1).name, is("spring"));
+        assertThat(map.get(2).name, is("framework"));
     }
 
     private void verify(int id, String name, double point){

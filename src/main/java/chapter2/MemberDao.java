@@ -7,6 +7,7 @@ import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class MemberDao {
@@ -27,6 +28,10 @@ public class MemberDao {
 
     public List<Member> findMembers(){
         return template.queryForList("findMembers");
+    }
+
+    public Map<Integer, Member> findMembersForMap(){
+        return template.queryForMap("findMembers", null, "id");
     }
 
     public Member findMemberById(int id) {
