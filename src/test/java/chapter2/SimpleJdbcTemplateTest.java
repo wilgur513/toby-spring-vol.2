@@ -24,46 +24,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("/chapter2/dataSource.xml")
 public class SimpleJdbcTemplateTest {
-    public static class Member{
-        int id;
-        String name;
-        double point;
-
-        public Member(){
-
-        }
-
-        public Member(int id, String name, double point) {
-            this.id = id;
-            this.name = name;
-            this.point = point;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public void setPoint(double point) {
-            this.point = point;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public double getPoint() {
-            return point;
-        }
-    }
-
     @Autowired
     DataSource dataSource;
     SimpleJdbcTemplate template;
