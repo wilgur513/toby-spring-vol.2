@@ -4,6 +4,7 @@ import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -21,12 +22,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("/chapter2/dataSource.xml")
 public class SimpleJdbcInsertTest {
-    SimpleJdbcTemplate template;
+    JdbcTemplate template;
     SimpleJdbcInsert insert;
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
-        template = new SimpleJdbcTemplate(dataSource);
+        template = new JdbcTemplate(dataSource);
         insert = new SimpleJdbcInsert(dataSource).withTableName("member");
     }
 
