@@ -16,15 +16,7 @@
                            http://www.springframework.org/schema/aop
                            http://www.springframework.org/schema/aop/spring-aop.xsd">
     <context:component-scan base-package="chapter2"/>
-    <aop:config>
-        <aop:advisor advice-ref="txAdvice" pointcut="execution(* *..MemberDao.*(..))"/>
-    </aop:config>
-
-    <tx:advice id="txAdvice">
-        <tx:attributes>
-            <tx:method name="insertAll" rollback-for="RuntimeException"/>
-        </tx:attributes>
-    </tx:advice>
+    <tx:annotation-driven />
 
     <bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
         <property name="dataSource" ref="dataSource"/>
