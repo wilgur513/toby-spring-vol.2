@@ -15,5 +15,4 @@
         <property name="username" value="#{prop['db.username']}"/>
         <property name="password" value="#{prop['db.password']}"/>
     </bean>
-
 </beans>

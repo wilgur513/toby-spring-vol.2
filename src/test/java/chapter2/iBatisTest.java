@@ -17,7 +17,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @ContextConfiguration("/chapter2/ibatisTest.xml")
 public class iBatisTest {
     @Autowired
-    MemberDao dao;
+    MemberDaoImpl dao;
 
     @Before
     public void setUp() throws Exception {

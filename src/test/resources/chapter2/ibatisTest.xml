@@ -3,13 +3,28 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:util="http://www.springframework.org/schema/util"
        xmlns:context = "http://www.springframework.org/schema/context"
+       xmlns:tx = "http://www.springframework.org/schema/tx"
+       xmlns:aop = "http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans.xsd
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util.xsd
                            http://www.springframework.org/schema/context
-                           http://www.springframework.org/schema/context/spring-context.xsd ">
+                           http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop.xsd">
     <context:component-scan base-package="chapter2"/>
+    <aop:config>
+        <aop:advisor advice-ref="txAdvice" pointcut="execution(* *..MemberDao.*(..))"/>
+    </aop:config>
+
+    <tx:advice id="txAdvice">
+        <tx:attributes>
+            <tx:method name="insertAll" rollback-for="RuntimeException"/>
+        </tx:attributes>
+    </tx:advice>
 
     <bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
         <property name="dataSource" ref="dataSource"/>
@@ -20,6 +35,9 @@
         <property name="url" value="#{prop['db.url']}"/>
         <property name="username" value="#{prop['db.username']}"/>
         <property name="password" value="#{prop['db.password']}"/>
+    </bean>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
     </bean>
     <util:properties id="prop" location="/chapter2/data.properties"/>
 </beans>
