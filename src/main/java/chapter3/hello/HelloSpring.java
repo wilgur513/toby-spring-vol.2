@@ -1,4 +1,4 @@
-package chapter3;
+package chapter3.hello;
 
 public class HelloSpring {
     public String sayHello(String name) {

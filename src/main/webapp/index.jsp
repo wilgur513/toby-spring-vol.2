@@ -1,4 +1,4 @@
-<%@ page import="chapter3.HelloSpring" %>
+<%@ page import="chapter3.hello.HelloSpring" %>
 <%@ page import="org.springframework.context.ApplicationContext" %>
 <%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <html>
