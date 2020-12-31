@@ -20,7 +20,7 @@ public class HelloController implements Controller {
 
         Map<String, Object> model = new HashMap<>();
         model.put("message", message);
-        
+
         return new ModelAndView("/WEB-INF/view/hello.jsp", model);
     }
 }
