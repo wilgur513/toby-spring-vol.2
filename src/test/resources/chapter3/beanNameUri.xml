@@ -2,6 +2,6 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-    <bean id="hello" class="chapter3.hello.HelloController" />
-    <bean class="org.springframework.web.servlet.mvc.support.ControllerBeanNameHandlerMapping" />
+    <bean name="/hi/**/hello" class="chapter3.hello.HelloController" />
+    <bean name="/s*" class="chapter3.hello.HelloController"/>
 </beans>
