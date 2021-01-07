@@ -1,9 +1,7 @@
 package chapter3;
 
-import chapter3.servletfortest.AfterRunService;
 import chapter3.servletfortest.ConfigDispatcherServlet;
 import org.junit.After;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;

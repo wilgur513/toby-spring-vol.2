@@ -1,26 +1,16 @@
 package chapter3.hello;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.Controller;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
+import chapter3.SimpleController;
 import java.util.Map;
 
-public class HelloController implements Controller {
-    @Autowired
-    HelloSpring helloSpring;
+public class HelloController extends SimpleController {
+    public HelloController() {
+        setParams(new String[]{"name"});
+        setViewName("/WEB-INF/view/hello.jsp");
+    }
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
-        String name = httpServletRequest.getParameter("name");
-        String message = helloSpring.sayHello(name);
-
-        Map<String, Object> model = new HashMap<>();
-        model.put("message", message);
-
-        return new ModelAndView("/WEB-INF/view/hello.jsp", model);
+    public void control(Map<String, String> params, Map<String, Object> model) {
+        model.put("message", "Hello " + params.get("name"));
     }
 }

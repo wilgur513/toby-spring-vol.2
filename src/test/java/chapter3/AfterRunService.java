@@ -1,4 +1,4 @@
-package chapter3.servletfortest;
+package chapter3;
 
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
