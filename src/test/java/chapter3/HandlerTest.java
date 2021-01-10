@@ -1,9 +1,14 @@
 package chapter3;
 
+import chapter3.hello.AllHandleInterceptor;
+import chapter3.hello.OnlyPreHandleInterceptor;
 import org.junit.Test;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
 
 public class HandlerTest extends AbstractDispatcherServletTest{
     @Test
@@ -59,6 +64,39 @@ public class HandlerTest extends AbstractDispatcherServletTest{
 
         runService("/start", "Start");
         checkViewNameAndModel("Start");
+    }
+
+    @Test
+    public void defaultHandler() throws ServletException, IOException {
+        setLocations("/chapter3/defaultHandler.xml");
+        runService("/default");
+
+        assertViewName("defaultPage");
+        assertModel("message", "Default Controller");
+    }
+
+    @Test
+    public void onlyPreHandleInterceptor() throws ServletException, IOException {
+        setLocations("/chapter3/onlyPreHandlerInterceptor.xml");
+        initRequest("/hello").addParameter("name", "Spring");
+        runService();
+
+        OnlyPreHandleInterceptor interceptor = getBean(OnlyPreHandleInterceptor.class);
+        assertThat(interceptor.preHandler, is(true));
+        assertThat(interceptor.postHandler, is(false));
+        assertThat(interceptor.afterCompletion, is(false));
+    }
+
+    @Test
+    public void allHandleInterceptor() throws ServletException, IOException {
+        setLocations("/chapter3/allHandlerInterceptor.xml");
+        initRequest("/hello").addParameter("name", "Spring");
+        runService();
+
+        AllHandleInterceptor interceptor = getBean(AllHandleInterceptor.class);
+        assertThat(interceptor.preHandler, is(true));
+        assertThat(interceptor.postHandler, is(true));
+        assertThat(interceptor.afterComplete, is(true));
     }
 
     private void runService(String url, String name) throws ServletException, IOException {
