@@ -1,4 +1,4 @@
-package chapter3.hello;
+package chapter3.hello.interceptor;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;

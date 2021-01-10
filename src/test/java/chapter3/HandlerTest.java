@@ -1,7 +1,11 @@
 package chapter3;
 
-import chapter3.hello.AllHandleInterceptor;
-import chapter3.hello.OnlyPreHandleInterceptor;
+import chapter3.hello.HelloController;
+import chapter3.hello.interceptor.AllHandleInterceptor;
+import chapter3.hello.interceptor.OnlyPreHandleInterceptor;
+import chapter3.simple.adapter.SimpleHandlerAdapter;
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.servlet.ServletException;
@@ -11,6 +15,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.*;
 
 public class HandlerTest extends AbstractDispatcherServletTest{
+
+    @Before
+    public void setUp() throws Exception {
+        setClasses(SimpleHandlerAdapter.class);
+    }
+
+    @Ignore
     @Test
     public void controllerBeanNameHandlerMapping1() throws ServletException, IOException {
         setLocations("/chapter3/controllerBeanName.xml");
@@ -18,6 +29,7 @@ public class HandlerTest extends AbstractDispatcherServletTest{
         checkViewNameAndModel("Spring");
     }
 
+    @Ignore
     @Test
     public void controllerBeanNameHandlerMapping2() throws ServletException, IOException {
         setLocations("/chapter3/controllerBeanName.xml");
@@ -46,6 +58,7 @@ public class HandlerTest extends AbstractDispatcherServletTest{
         checkViewNameAndModel("ABCD");
     }
 
+    @Ignore
     @Test
     public void controllerClassNameHandlerMapping() throws ServletException, IOException {
         setLocations("/chapter3/controllerClassName.xml");
@@ -69,6 +82,7 @@ public class HandlerTest extends AbstractDispatcherServletTest{
     @Test
     public void defaultHandler() throws ServletException, IOException {
         setLocations("/chapter3/defaultHandler.xml");
+        setClasses(SimpleHandlerAdapter.class);
         runService("/default");
 
         assertViewName("defaultPage");
@@ -97,6 +111,13 @@ public class HandlerTest extends AbstractDispatcherServletTest{
         assertThat(interceptor.preHandler, is(true));
         assertThat(interceptor.postHandler, is(true));
         assertThat(interceptor.afterComplete, is(true));
+    }
+
+    @Test
+    public void simpleHandlerAdapter() throws ServletException, IOException {
+        setClasses(SimpleHandlerAdapter.class, HelloController.class);
+        initRequest("/hello").addParameter("name", "Spring").runService();
+        checkViewNameAndModel("Spring");
     }
 
     private void runService(String url, String name) throws ServletException, IOException {

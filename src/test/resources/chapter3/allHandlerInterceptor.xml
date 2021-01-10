@@ -10,6 +10,6 @@
         </property>
     </bean>
 
-    <bean id="interceptor" class="chapter3.hello.AllHandleInterceptor" />
+    <bean id="interceptor" class="chapter3.hello.interceptor.AllHandleInterceptor" />
     <bean name="/hello" class="chapter3.hello.HelloController" />
 </beans>

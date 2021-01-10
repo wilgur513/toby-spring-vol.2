@@ -7,5 +7,6 @@
                            http://www.springframework.org/schema/context
                            http://www.springframework.org/schema/context/spring-context.xsd">
     <context:annotation-config/>
+    <bean class="chapter3.simple.adapter.SimpleHandlerAdapter" />
     <bean name="/hello" class="chapter3.hello.HelloController" />
 </beans>

@@ -1,4 +1,4 @@
-package chapter3.servletfortest;
+package chapter3.servlet.fortest;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

@@ -11,5 +11,5 @@
     </bean>
 
     <bean name="/hello" class="chapter3.hello.HelloController" />
-    <bean id="interceptor" class="chapter3.hello.OnlyPreHandleInterceptor"/>
+    <bean id="interceptor" class="chapter3.hello.interceptor.OnlyPreHandleInterceptor"/>
 </beans>

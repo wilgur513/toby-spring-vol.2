@@ -1,5 +1,6 @@
-package chapter3.servletfortest;
+package chapter3.servlet.fortest;
 
+import chapter3.simple.adapter.SimpleHandlerAdapter;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
@@ -63,6 +64,7 @@ public class ConfigDispatcherServlet extends DispatcherServlet {
                     XmlBeanDefinitionReader xmlReader = new XmlBeanDefinitionReader(defaultListableBeanFactory);
                     xmlReader.loadBeanDefinitions(locations);
                 }
+
 
                 if(classes != null){
                     AnnotatedBeanDefinitionReader reader = new AnnotatedBeanDefinitionReader(defaultListableBeanFactory);

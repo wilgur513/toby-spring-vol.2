@@ -1,11 +1,8 @@
 package chapter3;
 
-import chapter3.servletfortest.SimpleGetAndPostServlet;
+import chapter3.servlet.fortest.SimpleGetAndPostServlet;
 import org.junit.*;
-import org.springframework.context.ApplicationContext;
 import org.springframework.mock.web.*;
-import org.springframework.web.context.support.WebApplicationContextUtils;
-import org.springframework.web.context.support.XmlWebApplicationContext;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
