@@ -7,6 +7,17 @@
                            http://www.springframework.org/schema/context
                            http://www.springframework.org/schema/context/spring-context.xsd">
     <context:annotation-config/>
-    <bean name="/hello" class="chapter3.view.HelloController" />
+    <bean id="marshaller" class="org.springframework.oxm.castor.CastorMarshaller" />
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/view" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+    <bean id="marshallingView" class="org.springframework.web.servlet.view.xml.MarshallingView">
+        <property name="marshaller" ref="marshaller" />
+        <property name="modelKey" value="info" />
+    </bean>
+
+    <bean name="/hello" class="chapter3.view.InternalResourceViewController" />
     <bean class="chapter3.view.RedirectController" />
+    <bean class="chapter3.view.MarshallerView" />
 </beans>
