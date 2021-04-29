@@ -8,4 +8,5 @@
                            http://www.springframework.org/schema/context/spring-context.xsd">
     <context:annotation-config/>
     <bean name="/hello" class="chapter3.view.HelloController" />
+    <bean class="chapter3.view.RedirectController" />
 </beans>
