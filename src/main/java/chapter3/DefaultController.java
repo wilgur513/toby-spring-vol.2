@@ -3,6 +3,8 @@ package chapter3;
 import chapter3.simple.controller.RequiredParams;
 import chapter3.simple.controller.SimpleController;
 import chapter3.simple.controller.ViewName;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.InternalResourceView;
 
 import java.util.Map;
 
@@ -12,5 +14,6 @@ public class DefaultController implements SimpleController {
     @Override
     public void control(Map<String, String> params, Map<String, Object> model) {
         model.put("message", "Default Controller");
+
     }
 }
