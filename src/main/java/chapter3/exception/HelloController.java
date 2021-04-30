@@ -22,5 +22,4 @@ public class HelloController {
 
         return new ModelAndView("/WEB-INF/view/hello.jsp", model);
     }
-
 }
