@@ -10,17 +10,26 @@ import javax.jws.WebParam;
 public class MyController {
     @RequestMapping("/hello")
     public ModelAndView hello(){
-        return new ModelAndView("/WEB-INF/view/hello.jsp");
+        return new ModelAndView("viewName");
     }
 
     @RequestMapping({"/hi", "/bye"})
     public ModelAndView multi() {
-        return new ModelAndView("/WEB-INF/view/hello.jsp");
+        return new ModelAndView("hello");
     }
 
     @RequestMapping(value="/post", method= RequestMethod.POST)
     public ModelAndView post() {
-        return new ModelAndView("/WEB-INF/view/hello.jsp");
+        return new ModelAndView("hello");
     }
 
+    @RequestMapping(value="/edit", params="type=admin")
+    public ModelAndView editAdmin() {
+        return new ModelAndView("admin");
+    }
+
+    @RequestMapping(value="/edit", params="type=member")
+    public ModelAndView editMember() {
+        return new ModelAndView("member");
+    }
 }

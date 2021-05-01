@@ -19,30 +19,40 @@ public class MyControllerTest {
 
     @Test
     public void shouldMappingURL() throws Exception {
-        expectStatusAndUrl(mvc.perform(get("/my/hello")));
-        expectStatusAndUrl(mvc.perform(get("/my/hello/")));
-        expectStatusAndUrl(mvc.perform(get("/my/hello.html")));
-        expectStatusAndUrl(mvc.perform(get("/my/hello.*")));
+        expectStatusAndUrl(mvc.perform(get("/my/hello")), "viewName");
+        expectStatusAndUrl(mvc.perform(get("/my/hello/")), "viewName");
+        expectStatusAndUrl(mvc.perform(get("/my/hello.html")), "viewName");
+        expectStatusAndUrl(mvc.perform(get("/my/hello.*")), "viewName");
     }
 
     @Test
     public void shouldRequestMapMultiUrl() throws Exception {
-        expectStatusAndUrl(mvc.perform(get("/my/hi")));
-        expectStatusAndUrl(mvc.perform(get("/my/bye")));
+        expectStatusAndUrl(mvc.perform(get("/my/hi")), "hello");
+        expectStatusAndUrl(mvc.perform(get("/my/bye")), "hello");
     }
 
     @Test
     public void shouldSettingRequestMethod() throws Exception {
-        expectStatusAndUrl(mvc.perform(post("/my/post")));
+        expectStatusAndUrl(mvc.perform(post("/my/post")), "hello");
         expectIsNotAllowed(mvc.perform(get("/my/post")));
     }
 
-    private void expectStatusAndUrl(ResultActions actions) throws Exception {
+    @Test
+    public void shouldMappingByParams() throws Exception {
+        expectStatusAndUrl(mvc.perform(get("/my/edit?type=admin")), "admin");
+        expectStatusAndUrl(mvc.perform(get("/my/edit?type=member")), "member");
+    }
+
+    private void expectStatusAndUrl(ResultActions actions, String viewName) throws Exception {
         actions.andExpect(status().isOk())
-            .andExpect(forwardedUrl("/WEB-INF/view/hello.jsp"));
+            .andExpect(forwardedUrl(viewName));
     }
 
     private void expectIsNotAllowed(ResultActions actions) throws Exception {
         actions.andExpect(status().isMethodNotAllowed());
+    }
+
+    private void expectIsNotFound(ResultActions actions) throws Exception {
+        actions.andExpect(status().isNotFound());
     }
 }
