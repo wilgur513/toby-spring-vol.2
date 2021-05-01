@@ -1,6 +1,7 @@
 package chapter4;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.jws.WebParam;
@@ -16,4 +17,10 @@ public class MyController {
     public ModelAndView multi() {
         return new ModelAndView("/WEB-INF/view/hello.jsp");
     }
+
+    @RequestMapping(value="/post", method= RequestMethod.POST)
+    public ModelAndView post() {
+        return new ModelAndView("/WEB-INF/view/hello.jsp");
+    }
+
 }

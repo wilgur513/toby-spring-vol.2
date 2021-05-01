@@ -31,8 +31,18 @@ public class MyControllerTest {
         expectStatusAndUrl(mvc.perform(get("/my/bye")));
     }
 
+    @Test
+    public void shouldSettingRequestMethod() throws Exception {
+        expectStatusAndUrl(mvc.perform(post("/my/post")));
+        expectIsNotAllowed(mvc.perform(get("/my/post")));
+    }
+
     private void expectStatusAndUrl(ResultActions actions) throws Exception {
         actions.andExpect(status().isOk())
             .andExpect(forwardedUrl("/WEB-INF/view/hello.jsp"));
+    }
+
+    private void expectIsNotAllowed(ResultActions actions) throws Exception {
+        actions.andExpect(status().isMethodNotAllowed());
     }
 }
