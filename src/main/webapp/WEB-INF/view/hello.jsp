@@ -4,6 +4,6 @@
     <title>Hello</title>
 </head>
 <body>
- ${message}
+ Hello!
 </body>
 </html>
