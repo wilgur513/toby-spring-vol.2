@@ -27,6 +27,11 @@ public class SubControllerTest {
         expectStatusAndUrl(mvc.perform(get("/hello")), "sub-hello");
     }
 
+    @Test
+    public void shouldOverrideRequestMapping() throws Exception {
+        expectStatusAndUrl(mvc.perform(get("/override")), "sub-override");
+    }
+
     private void expectStatusAndUrl(ResultActions actions, String viewName) throws Exception {
         actions.andExpect(status().isOk())
                 .andExpect(forwardedUrl(viewName));

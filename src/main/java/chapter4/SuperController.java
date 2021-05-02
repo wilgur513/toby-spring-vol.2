@@ -15,4 +15,9 @@ public class SuperController {
     public ModelAndView hello() {
         return new ModelAndView("super-hello");
     }
+
+    @RequestMapping("/override")
+    public ModelAndView override() {
+        return new ModelAndView("super-override");
+    }
 }
