@@ -28,4 +28,24 @@ public class MethodParametersTest {
         mvc.perform(get("/errorPathVariable/notNumber"))
                 .andExpect(status().isBadRequest());
     }
+
+    @Test
+    public void requestParam() throws Exception {
+        mvc.perform(
+            get("/requestParam")
+                .param("id", String.valueOf(100))
+                .param("name", "Lee")
+        ).andExpect(model().attribute("id", 100))
+            .andExpect(model().attribute("name", "Lee"));
+    }
+
+    @Test
+    public void requestParamUsingMap() throws Exception {
+        mvc.perform(
+                get("/requestParamUsingMap")
+                        .param("id", String.valueOf(100))
+                        .param("name", "Lee")
+        ).andExpect(model().attribute("id", 100))
+            .andExpect(model().attribute("name", "Lee"));
+    }
 }
