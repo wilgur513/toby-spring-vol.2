@@ -1,4 +1,4 @@
-package chapter4;
+package chapter4.requestmapping;
 
 import org.junit.Before;
 import org.junit.Test;
