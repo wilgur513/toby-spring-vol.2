@@ -22,4 +22,10 @@ public class MethodParametersTest {
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("value", "hello"));
     }
+
+    @Test
+    public void badRequestPathVariable() throws Exception {
+        mvc.perform(get("/errorPathVariable/notNumber"))
+                .andExpect(status().isBadRequest());
+    }
 }

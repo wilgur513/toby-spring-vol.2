@@ -11,4 +11,9 @@ public class MethodParametersController {
     public void pathVariable(@PathVariable("value") String value, ModelMap model) {
         model.put("value", value);
     }
+
+    @RequestMapping("/errorPathVariable/{value}")
+    public void errorPathVariable(@PathVariable("value") int value) {
+
+    }
 }
