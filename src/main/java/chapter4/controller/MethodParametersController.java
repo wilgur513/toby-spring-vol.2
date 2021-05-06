@@ -2,6 +2,7 @@ package chapter4.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +32,12 @@ public class MethodParametersController {
         model.put("id", Integer.parseInt(params.get("id")));
         model.put("name", params.get("name"));
 
+        return "some view";
+    }
+
+    @RequestMapping("/cookieValue")
+    public String cookieValue(@CookieValue("value") String value, ModelMap model) {
+        model.put("value", value);
         return "some view";
     }
 }

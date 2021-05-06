@@ -5,6 +5,8 @@ import org.junit.Test;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import javax.servlet.http.Cookie;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -47,5 +49,13 @@ public class MethodParametersTest {
                         .param("name", "Lee")
         ).andExpect(model().attribute("id", 100))
             .andExpect(model().attribute("name", "Lee"));
+    }
+
+    @Test
+    public void cookieValue() throws Exception {
+        mvc.perform(
+            get("/cookieValue")
+                .cookie(new Cookie("value", "hello"))
+        ).andExpect(model().attribute("value", "hello"));
     }
 }
