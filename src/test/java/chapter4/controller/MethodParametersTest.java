@@ -58,4 +58,14 @@ public class MethodParametersTest {
                 .cookie(new Cookie("value", "hello"))
         ).andExpect(model().attribute("value", "hello"));
     }
+
+    @Test
+    public void requestHeader() throws Exception {
+        mvc.perform(
+                get("/requestHeader")
+                    .header("Host", "host")
+                    .header("Keep-Alive", true)
+        ).andExpect(model().attribute("Host", "host"))
+        .andExpect(model().attribute("Keep-Alive", true));
+    }
 }

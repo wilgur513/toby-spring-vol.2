@@ -2,10 +2,7 @@ package chapter4.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -38,6 +35,16 @@ public class MethodParametersController {
     @RequestMapping("/cookieValue")
     public String cookieValue(@CookieValue("value") String value, ModelMap model) {
         model.put("value", value);
+        return "some view";
+    }
+
+    @RequestMapping("/requestHeader")
+    public String requestHeader(@RequestHeader("Host") String host,
+                                @RequestHeader("Keep-Alive") boolean alive,
+                                Map<String, Object> model) {
+        model.put("Host", host);
+        model.put("Keep-Alive", alive);
+
         return "some view";
     }
 }
