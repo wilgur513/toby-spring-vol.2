@@ -18,8 +18,7 @@ import javax.servlet.ServletConfig;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class MethodReturnTest {
     MockMvc mvc;
@@ -33,6 +32,18 @@ public class MethodReturnTest {
     public void shouldMakeModelByModelAttribute() throws Exception {
         mvc.perform(get("/methodAttributeTest"))
             .andExpect(model().attribute("modelAttribute", "modelAttribute"));
+    }
+
+    @Test
+    public void shouldForwardUsingReturnedString() throws Exception {
+        mvc.perform(get("/returnString"))
+            .andExpect(forwardedUrl("/WEB-INF/view/hello.jsp"));
+    }
+
+    @Test
+    public void shouldForwardUsingURLName() throws Exception {
+        mvc.perform(get("/returnVoid"))
+            .andExpect(forwardedUrl("/WEB-INF/view/returnVoid.jsp"));
     }
 
     private ViewResolver viewResolver() {

@@ -14,4 +14,12 @@ public class MethodReturn {
     @RequestMapping("/methodAttributeTest")
     public void methodAttributeTest() {
     }
+
+    @RequestMapping("/returnString")
+    public String returnString() {
+        return "hello";
+    }
+
+    @RequestMapping("/returnVoid")
+    public void returnVoid(){}
 }
