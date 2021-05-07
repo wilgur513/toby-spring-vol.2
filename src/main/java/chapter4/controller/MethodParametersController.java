@@ -44,7 +44,11 @@ public class MethodParametersController {
                                 Map<String, Object> model) {
         model.put("Host", host);
         model.put("Keep-Alive", alive);
+        return "some view";
+    }
 
+    @RequestMapping("/modelAttribute")
+    public String modelAttribute(@ModelAttribute User user){
         return "some view";
     }
 }

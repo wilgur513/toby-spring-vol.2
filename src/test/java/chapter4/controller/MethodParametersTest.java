@@ -1,13 +1,22 @@
 package chapter4.controller;
 
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.context.annotation.Bean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.servlet.http.Cookie;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class MethodParametersTest {
@@ -67,5 +76,18 @@ public class MethodParametersTest {
                     .header("Keep-Alive", true)
         ).andExpect(model().attribute("Host", "host"))
         .andExpect(model().attribute("Keep-Alive", true));
+    }
+
+    @Test
+    public void modelAttribute() throws Exception {
+        Object obj = mvc.perform(
+            get("/modelAttribute")
+                .param("id", "id")
+                .param("pwd", "pwd")
+                .param("level", "1")
+        ).andReturn().getModelAndView().getModel().get("user");
+
+        User user = (User)obj;
+        assertThat(user, is(User.of("id", "pwd", 1)));
     }
 }
