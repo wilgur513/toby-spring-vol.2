@@ -15,6 +15,9 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.servlet.ServletConfig;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -44,6 +47,20 @@ public class MethodReturnTest {
     public void shouldForwardUsingURLName() throws Exception {
         mvc.perform(get("/returnVoid"))
             .andExpect(forwardedUrl("/WEB-INF/view/returnVoid.jsp"));
+    }
+
+    @Test
+    public void shouldAddReturnedModelObject() throws Exception {
+        Object actual = mvc.perform(get("/user"))
+            .andReturn().getModelAndView().getModel().get("user");
+        assertThat(actual, is(User.of("id", "pwd", 1)));
+    }
+
+    @Test
+    public void shouldAddToModelMapReturnedModelMapEntry() throws Exception {
+        mvc.perform(get("/returnModelMap"))
+            .andExpect(model().attribute("modelAttribute", "modelAttribute"))
+            .andExpect(model().attribute("hello", "hello"));
     }
 
     private ViewResolver viewResolver() {

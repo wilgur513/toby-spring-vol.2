@@ -1,6 +1,7 @@
 package chapter4.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -22,4 +23,16 @@ public class MethodReturn {
 
     @RequestMapping("/returnVoid")
     public void returnVoid(){}
+
+    @RequestMapping("/user")
+    public User user() {
+        return User.of("id", "pwd", 1);
+    }
+
+    @RequestMapping("/returnModelMap")
+    public ModelMap modelMap() {
+        ModelMap map = new ModelMap();
+        map.put("hello", "hello");
+        return map;
+    }
 }
