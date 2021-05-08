@@ -1,4 +1,4 @@
-package chapter4.controller;
+package chapter4;
 
 import java.util.Objects;
 

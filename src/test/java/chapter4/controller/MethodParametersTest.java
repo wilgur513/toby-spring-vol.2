@@ -1,22 +1,16 @@
 package chapter4.controller;
 
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
+import chapter4.User;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.annotation.Bean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.servlet.http.Cookie;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class MethodParametersTest {
