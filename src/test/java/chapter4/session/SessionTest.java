@@ -4,15 +4,14 @@ import chapter4.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultHandler;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 public class SessionTest {
     MockMvc mvc;
@@ -40,6 +39,16 @@ public class SessionTest {
         ).andReturn().getModelAndView().getModel().get("user");
 
         assertThat(user, is(User.of("id", "pwd", 2)));
+    }
+
+    @Test
+    public void shouldReleaseSessionAttributes() throws Exception {
+        Object user = mvc.perform(
+            post("/release")
+                .sessionAttr("user", User.of("id", "pwd", 1))
+        ).andReturn().getRequest().getSession().getAttribute("user");
+
+        assertThat(user, is(nullValue()));
     }
 
 
