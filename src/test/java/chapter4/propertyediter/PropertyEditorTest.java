@@ -46,6 +46,17 @@ public class PropertyEditorTest {
         ).andExpect(model().attribute("level", Level.BASIC));
     }
 
+    @Test
+    public void shouldMemberAgeUnder100() throws Exception {
+        Member member = (Member)mvc.perform(
+            get("/member")
+                .param("id", "1000").param("age", "120")
+        ).andReturn().getModelAndView().getModel().get("member");
+
+        assertThat(member.age, is(100));
+        assertThat(member.id, is(1000));
+    }
+
     private ViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setPrefix("/WEB-INF/view/");
