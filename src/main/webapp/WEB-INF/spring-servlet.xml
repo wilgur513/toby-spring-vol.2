@@ -7,5 +7,14 @@
                            http://www.springframework.org/schema/context
                            http://www.springframework.org/schema/context/spring-context.xsd">
     <context:annotation-config/>
-    <bean class="chapter4.requestmapping.MyController" />
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="webBindingInitializer">
+            <bean class="chapter4.propertyediter.MyWebBindingInitializer"></bean>
+        </property>
+    </bean>
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/view/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    <bean class="chapter4.propertyediter.PropertyEditorController" />
 </beans>

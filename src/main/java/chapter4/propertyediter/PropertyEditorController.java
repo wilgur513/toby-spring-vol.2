@@ -8,19 +8,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-class Member {
-    public int id;
-    public int age;
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-}
-
 @Controller
 public class PropertyEditorController {
     @InitBinder
@@ -30,10 +17,12 @@ public class PropertyEditorController {
     }
 
     @RequestMapping("/search")
-    public void search(@ModelAttribute Level level) {
+    public String search(@ModelAttribute Level level) {
+        return "level";
     }
 
     @RequestMapping("/member")
-    public void member(@ModelAttribute Member member){
+    public String member(@ModelAttribute Member member){
+        return "member";
     }
 }
