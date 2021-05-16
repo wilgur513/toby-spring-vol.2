@@ -5,8 +5,6 @@ public enum Level {
 
     private int value;
 
-    Level() {}
-
     Level(int value) {
         this.value = value;
     }
